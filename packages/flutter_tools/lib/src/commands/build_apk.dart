@@ -552,9 +552,12 @@ Future<Null> buildAndroid(
 
   // Build an AOT snapshot if needed.
   if (isAotBuildMode(buildMode) && aotPath == null) {
-    aotPath = await buildAotSnapshot(findMainDartFile(target), platform, buildMode);
-    if (aotPath == null)
+    String dartFile = findMainDartFile(target);
+    String dillFile = await buildDilFile(dartFile);
+    aotPath = await buildAotSnapshot(dillFile != null ? dillFile : dartFile, platform, buildMode);
+    if (aotPath == null) {
       throwToolExit('Failed to build AOT snapshot');
+    }
   }
 
   if (aotPath != null) {
