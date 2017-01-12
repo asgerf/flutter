@@ -121,6 +121,9 @@ Future<String> buildDilFile(String dartFile) async {
     '--url-mapping=dart:ui::$uiPath',
     '--url-mapping=dart:jni::$jniPath',
     '--url-mapping=dart:vmservice_sky::$vmServicePath',
+    '--strong',
+    '--tolerant',
+    '--verify-ir',
   ]);
   if (results.exitCode != 0) {
     printStatus(results.toString());
